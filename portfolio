@@ -1,0 +1,140 @@
+import { useEffect, useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Github, Linkedin, Mail } from "lucide-react";
+
+export default function Portfolio() {
+  const [repos, setRepos] = useState([]);
+
+  useEffect(() => {
+    fetch("https://api.github.com/users/Vishavjeet2710/repos")
+      .then((res) => res.json())
+      .then((data) => setRepos(data.slice(0, 6))); // show top 6 repos
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+      {/* Hero Section */}
+      <section className="flex flex-col items-center justify-center text-center py-20">
+        <img
+          src="https://avatars.githubusercontent.com/u/84689462?v=4"
+          alt="Vishavjeet Singh"
+          className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg"
+        />
+        <h1 className="text-4xl font-bold mt-4">Vishavjeet Singh Kainth</h1>
+        <p className="text-lg mt-2 max-w-xl">
+          Software Development Engineer II @ Increff | 3.5+ years experience
+          building scalable systems, distributed services, and automation tools.
+        </p>
+        <div className="flex gap-4 mt-4">
+          <a href="https://github.com/Vishavjeet2710" target="_blank">
+            <Github className="w-6 h-6" />
+          </a>
+          <a href="https://www.linkedin.com/in/vishavjeet-singh-791b311b3/" target="_blank">
+            <Linkedin className="w-6 h-6" />
+          </a>
+          <a href="mailto:vishavjeet27102000@gmail.com">
+            <Mail className="w-6 h-6" />
+          </a>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="max-w-4xl mx-auto px-6 py-10">
+        <h2 className="text-2xl font-semibold mb-4">About Me</h2>
+        <p>
+          I’m a problem solver passionate about designing scalable systems,
+          optimizing performance, and mentoring juniors. My expertise lies in
+          Kubernetes, Spring Boot, Hazelcast, and distributed architectures.
+        </p>
+      </section>
+
+      {/* Skills Section */}
+      <section className="bg-white py-10">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-2xl font-semibold mb-4">Skills</h2>
+          <p>
+            Java, Spring Boot, Hazelcast, MySQL, Kubernetes, ArgoCD, Docker,
+            Jenkins, ELK, Google Cloud, Distributed Systems, Debugging,
+            Problem-Solving
+          </p>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section className="max-w-4xl mx-auto px-6 py-10">
+        <h2 className="text-2xl font-semibold mb-6">Experience</h2>
+        <ul className="space-y-4">
+          <li>
+            <Card>
+              <CardContent className="p-4">
+                <h3 className="font-bold">SDE-2 @ Increff (2024 - Present)</h3>
+                <p>
+                  Led Kubernetes migration, re-architected scheduler service,
+                  built version tracking automation, delivered sprint-critical
+                  features, and improved developer efficiency with automation.
+                </p>
+              </CardContent>
+            </Card>
+          </li>
+          <li>
+            <Card>
+              <CardContent className="p-4">
+                <h3 className="font-bold">SDE-1 @ Increff (2022 - 2024)</h3>
+                <p>
+                  Built core fulfillment features (ASN, combos, order hopping),
+                  scaled inventory sync via multithreading, migrated audit logs
+                  to Elasticsearch, optimized DB migrations, and improved API
+                  modularity.
+                </p>
+              </CardContent>
+            </Card>
+          </li>
+        </ul>
+      </section>
+
+      {/* Projects Section */}
+      <section className="bg-white py-10">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-2xl font-semibold mb-6">Projects</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {repos.map((repo) => (
+              <Card key={repo.id}>
+                <CardContent className="p-4">
+                  <h3 className="font-bold text-lg">{repo.name}</h3>
+                  <p className="text-sm text-gray-600 mb-2">
+                    {repo.description || "No description available."}
+                  </p>
+                  <a
+                    href={repo.html_url}
+                    target="_blank"
+                    className="text-blue-600 hover:underline"
+                  >
+                    View on GitHub
+                  </a>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Achievements */}
+      <section className="max-w-4xl mx-auto px-6 py-10">
+        <h2 className="text-2xl font-semibold mb-4">Achievements</h2>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Winner - Increff Hackathon (Customer Success Automation)</li>
+          <li>CodeChef 5⭐ & LeetCode Knight</li>
+          <li>NCC C-Certificate Holder</li>
+          <li>Bhangra Champion 💃</li>
+        </ul>
+      </section>
+
+      {/* Contact */}
+      <section className="bg-gray-100 py-10 text-center">
+        <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
+        <p>Email: vishavjeet27102000@gmail.com | Phone: +91 76966 89410</p>
+      </section>
+    </div>
+  );
+}
